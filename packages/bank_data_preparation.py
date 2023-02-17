@@ -1,12 +1,9 @@
-from packages.json_export import get_bank_data
 from datetime import date
 
-bank_data = get_bank_data()
 
-
-def is_executed():
+def is_executed(transactions_list):
     bank_data_executed = []
-    for i in bank_data:
+    for i in transactions_list:
         if "state" not in i:
             continue
         if i['state'] == "EXECUTED":
@@ -14,24 +11,21 @@ def is_executed():
     return bank_data_executed
 
 
-def date_sorted():
-    bank_data_executed = is_executed()
-    for i in bank_data_executed:
+def date_sorted(transactions_list):
+    for i in transactions_list:
         i["date"] = i["date"][:10]
         i["date"] = date.fromisoformat(i["date"])
-    bank_data_executed = sorted(bank_data_executed, key=lambda i: i['date'], reverse=True)
+    bank_data_executed = sorted(transactions_list, key=lambda i: i['date'], reverse=True)
     return bank_data_executed
 
 
-def is_from_absent():
-    bank_data_executed = date_sorted()
-    for i in bank_data_executed:
+def is_from_absent(transactions_list):
+    for i in transactions_list:
         if "from" not in i:
             i["from"] = "Данные отсутствуют"
-    return bank_data_executed
+    return transactions_list
 
 
-def first_five_transactions():
-    bank_data_executed = is_from_absent()
-    bank_data_short = bank_data_executed[0:5]
+def first_five_transactions(transactions_list):
+    bank_data_short = transactions_list[0:5]
     return bank_data_short
