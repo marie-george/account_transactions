@@ -20,7 +20,7 @@ class Transaction:
             return "Данные отсутствуют"
         if self.from_[0:4] == "Счет":
             first_digits = self.from_[-20:-16]
-            second_digits = self.from_[-16:-15]
+            second_digits = self.from_[-16:-14]
             last_digits = self.from_[-4:]
             return f'Счет {first_digits} {second_digits}** **** **** {last_digits}'
         else:
